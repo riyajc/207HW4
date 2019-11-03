@@ -66,3 +66,40 @@ else:
     print("=> Product: {p}, Description: {d}".format(p=Name, d=result))
     
     
+DEMO
+
+Test Case 1: Product name is  "Butterfly". Calling the product for the first time from the database. Hence a GET_MISS is returned.
+             $ python app1.py
+             got a miss, need to get the data from db
+             returning data to client from db
+             => Product: Butterfly, Description: Insect
+             setting the data to memcache
+         
+Now, the product is delivered from the database and saved in cache. We call the product for the second time. A GET_HIT is recieved and the product is delivered directly from the cache.
+             $ python app1.py
+             got the data directly from memcache
+             => Product: Butterfly, Description: b'Insect'
+             
+             
+Test Case 2: Product Name is "Tree". After calling the product, a GET_MISS is returned as data with name "Tree" in the database does not exist.
+            $ python app1.py
+            got a miss, need to get the data from db
+            requested data does not exist in db
+            
+Test Case 3: Product name is  "Phuket". Calling the product for the first time from the database. Hence a GET_MISS is returned.
+            $ python app1.py
+            got a miss, need to get the data from db
+            returning data to client from db
+            => Product: Phuket, Description: Island
+            setting the data to memcache
+           
+Now, the product is delivered from the database and saved in cache. We call the product for the second time. A GET_HIT is recieved and the product is delivered directly from the cache.
+             $ python app1.py
+             got the data directly from memcache
+             => Product: Phuket, Description: b'Island'
+             
+Test Case 4: We call the product name "Butterfly" again. As the data is already present in the cache, it will retuen the data to the client direclty from the cache.
+    $ python app1.py
+    got the data directly from memcache
+    => Product: Butterfly, Description: b'Insect'
+    
